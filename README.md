@@ -1,50 +1,37 @@
-A.  Create a letter of transmittal and a project proposal to convince senior, nontechnical managers and executives to implement your data product approved in Task 1. The proposal should include each of the following:
-•   a summary of the problem
-•   a description of how the data product benefits the customer and supports the decision-making process
-•   an outline of the data product
-•   a description of the data that will be used to construct the data product
-•   the objectives and hypotheses of the project
-•   an outline of the project methodology
-•   funding requirements
-•   the impact of the solution on stakeholders
-•   ethical and legal considerations and precautions that will be used when working with and communicating about sensitive data
-•   your expertise relevant to the solution you propose
- 
-    Note: Expertise described here could be real or hypothetical to fit the project topic you have created.
- 
-B.  Write an executive summary directed to IT professionals that addresses each of the following requirements:
-•   the decision support problem or opportunity you are solving for
-•   a description of the customers and why this product will fulfill their needs
-•   existing gaps in the data products you are replacing or modifying (if applicable)
-•   the data available or the data that needs to be collected to support the data product lifecycle
-•   the methodology you use to guide and support the data product design and development
-•   deliverables associated with the design and development of the data product
-•   the plan for implementation of your data product, including the anticipated outcomes from this development
-•   the methods for validating and verifying that the developed data product meets the requirements and, subsequently, the needs of the customers
-•   the programming environments and any related costs, as well as the human resources that are necessary to execute each phase in the development of the data product
-•   a projected timeline, including milestones, start and end dates, duration for each milestone, dependencies, and resources assigned to each task
- 
-C.  Design and develop your fully functional data product that addresses your identified business problem or organizational need from part A. Include each of the following attributes, as they are the minimum required elements for the product:
-•   one descriptive method and one nondescriptive (predictive or prescriptive) method
-•   collected or available datasets
-•   decision support functionality
-•   ability to support featurizing, parsing, cleaning, and wrangling datasets
-•   methods and algorithms supporting data exploration and preparation
-•   data visualization functionalities for data exploration and inspection
-•   implementation of interactive queries
-•   implementation of machine-learning methods and algorithms
-•   functionalities to evaluate the accuracy of the data product
-•   industry-appropriate security features
-•   tools to monitor and maintain the product
-•   a user-friendly, functional dashboard that includes three visualization types
- 
-D.  Create each of the following forms of documentation for the product you have developed:
-•   a business vision or business requirements document
-•   raw and cleaned datasets with the code and executable files used to scrape and clean data (if applicable)
-•   code used to perform the analysis of the data and construct a descriptive, predictive, or prescriptive data product
-•   assessment of the hypotheses for acceptance or rejection
-•   visualizations and elements of effective storytelling supporting the data exploration and preparation, data analysis, and data summary, including the phenomenon and its detection
-•   assessment of the product’s accuracy 
-•   the results from the data product testing, revisions, and optimization based on the provided plans, including screenshots
-•   source code and executable file(s)
-•   a quick-start guide summarizing the steps necessary to install and use the product
+# Customer Churn Predictor
+
+WGU coursework. A Jupyter notebook that explores a bank-customer dataset, trains a random forest to predict churn, and lets you try predictions with interactive widgets.
+
+## What it does
+
+- Loads `Churn_Modelling.csv` (10,000 customers; a public dataset) and drops identifier columns.
+- Visualizes churn by geography, churn rate by age, and the churn / non-churn split.
+- Trains a `RandomForestClassifier` (100 trees, 80/20 train/test split, fixed seed).
+- Provides sliders and dropdowns to enter a customer profile and see the predicted outcome.
+
+## Results
+
+On the 2,000-customer test set:
+
+| | Precision | Recall | F1 | Support |
+|---|---|---|---|---|
+| Stayed | 0.88 | 0.96 | 0.92 | 1,607 |
+| Churned | 0.74 | 0.47 | 0.58 | 393 |
+
+Overall accuracy is 0.86, but that number flatters the model: about 20% of customers churned, and the model finds fewer than half of them (recall 0.47). Confusion matrix: 1,543 true negatives, 64 false positives, 208 false negatives, 185 true positives.
+
+## Run it
+
+```sh
+pip install -r requirements.txt
+pip install notebook   # requirements.txt does not include the Jupyter app itself
+jupyter notebook notebook.ipynb
+```
+
+Run all cells, then use the widgets near the end of the notebook.
+
+## Limitations and next steps
+
+- Recall on churners is low. Class weighting, threshold tuning, or resampling would be the first things to try.
+- Only one model and one split; no cross-validation or hyperparameter search.
+- The dataset is a public teaching dataset, so the results say little about real customers.
